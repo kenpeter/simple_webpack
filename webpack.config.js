@@ -7,9 +7,15 @@ const webpack  = require("webpack");
 module.exports = {
 	// input
 	entry: {
-		main: "./src/app.js",
+		main: "./src/app.ts",
 		vendor: "./src/vendor.js"
-	}
+	},
+	
+	// no need to to file suffix
+	resolve: {
+		extensions: ['.js', '.ts']
+	},
+
 	// output
   output: {
 		// ./dists/x.js
@@ -21,9 +27,25 @@ module.exports = {
 	module: {
 		rules: [
 			{
+      	test: /\.ts$/,
+        loader: "awesome-typescript-loader"
+      },
+
+			{
+      	test: /\.ts$/,
+        enforce: "pre",
+        loader: 'tslint-loader'
+      },
+
+			{
 				test: /\.css$/,
 				loader: ["style-loader", "css-loader"]
-			}
+			},
+
+			{
+   	 		test: /\.scss$/,
+				loader: ["style-loader", "css-loader?sourceMap", "sass-loader?sourceMap"]
+			}		
 		]
 	},
 
